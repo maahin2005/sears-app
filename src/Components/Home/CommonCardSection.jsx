@@ -1,23 +1,4 @@
-import React, { useEffect, useState } from "react";
-
 function CommonCardSection({ array, title, cols }) {
-  const [colums, setColums] = useState(cols);
-
-  // useEffect(() => {
-  //   const updateCols = () => {
-  //     if (window.innerWidth < 768) {
-  //       setColums(2); // Mobile screens
-  //     } else if (window.innerWidth < 1068) {
-  //       setColums(3); // Larger screens
-  //     }
-  //   };
-
-  //   updateCols();
-
-  //   window.addEventListener("resize", updateCols);
-  //   return () => window.removeEventListener("resize", updateCols);
-  // }, [colums, cols]);
-
   const CircleCard = ({ img, title }) => {
     return (
       <>
@@ -79,13 +60,6 @@ function CommonCardSection({ array, title, cols }) {
           ))}
         </div>
       )}
-      {/* <div
-        className={`grid grid-cols-${cols} m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
-      >
-        {array.map((el, i) => (
-          <CircleCard {...el} key={i} />
-        ))}
-      </div> */}
     </section>
   );
 }

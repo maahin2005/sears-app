@@ -11,6 +11,7 @@ import SectionFive from "../Components/Home/SectionFive";
 import { arr1, arr2 } from "../Components/helpers/arrays";
 import SectionSix from "../Components/Home/SectionSix";
 import SectionSeven from "../Components/Home/SectionSeven";
+import LastSection from "../Components/Home/LastSection";
 
 function Home() {
   return (
@@ -32,7 +33,13 @@ function Home() {
       <CommonCardSection array={arr1} title="OUR APPLIANCE PROMISE" cols={5} />
       <SectionSix />
       <CommonCardSection array={arr2} title="SHOP OUR TOP BRANDS" cols={6} />
-      <SectionSeven />
+      <div className="my-5 py-10 border-b-2 border-gray-400 w-11/12 m-auto">
+        <SectionSeven />
+      </div>
+      <div className="my-10">
+        <LastSection />
+      </div>
+      <hr />
     </>
   );
 }
