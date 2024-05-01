@@ -3,20 +3,20 @@ import React, { useEffect, useState } from "react";
 function CommonCardSection({ array, title, cols }) {
   const [colums, setColums] = useState(cols);
 
-  useEffect(() => {
-    const updateCols = () => {
-      if (window.innerWidth < 768) {
-        setColums(2); // Mobile screens
-      } else if (window.innerWidth < 1068) {
-        setColums(3); // Larger screens
-      }
-    };
+  // useEffect(() => {
+  //   const updateCols = () => {
+  //     if (window.innerWidth < 768) {
+  //       setColums(2); // Mobile screens
+  //     } else if (window.innerWidth < 1068) {
+  //       setColums(3); // Larger screens
+  //     }
+  //   };
 
-    updateCols();
+  //   updateCols();
 
-    window.addEventListener("resize", updateCols);
-    return () => window.removeEventListener("resize", updateCols);
-  }, [colums, cols]);
+  //   window.addEventListener("resize", updateCols);
+  //   return () => window.removeEventListener("resize", updateCols);
+  // }, [colums, cols]);
 
   const CircleCard = ({ img, title }) => {
     return (
@@ -38,13 +38,54 @@ function CommonCardSection({ array, title, cols }) {
       <div>
         <p className="text-lg md:text-4xl my-5">{title}</p>
       </div>
-      <div
-        className={`grid grid-cols-${colums} m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+      {cols === 8 ? (
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+        >
+          {array.map((el, i) => (
+            <CircleCard {...el} key={i} />
+          ))}
+        </div>
+      ) : cols === 7 ? (
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+        >
+          {array.map((el, i) => (
+            <CircleCard {...el} key={i} />
+          ))}
+        </div>
+      ) : cols === 6 ? (
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+        >
+          {array.map((el, i) => (
+            <CircleCard {...el} key={i} />
+          ))}
+        </div>
+      ) : cols === 5 ? (
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+        >
+          {array.map((el, i) => (
+            <CircleCard {...el} key={i} />
+          ))}
+        </div>
+      ) : (
+        <div
+          className={`grid grid-cols-2 m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
+        >
+          {array.map((el, i) => (
+            <CircleCard {...el} key={i} />
+          ))}
+        </div>
+      )}
+      {/* <div
+        className={`grid grid-cols-${cols} m-auto gap-6 p-3 md:p-4 lg:p-10 cursor-pointer`}
       >
         {array.map((el, i) => (
           <CircleCard {...el} key={i} />
         ))}
-      </div>
+      </div> */}
     </section>
   );
 }
