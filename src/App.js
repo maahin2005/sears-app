@@ -1,12 +1,19 @@
+import { useLocation } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
-import Home from "./Pages/Home";
+
+import PublicRoutes from "./Routing/PublicRoutes";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App bg-white">
-      <Navbar />
-      <Home />
+      {location.pathname === "/login" ||
+      location.pathname === "/register" ? null : (
+        <Navbar />
+      )}
+      <PublicRoutes />
     </div>
   );
 }

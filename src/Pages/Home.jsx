@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionOne from "../Components/Home/SectionOne";
 import CommonCardSection from "../Components/Home/CommonCardSection";
 import SectionThree from "../Components/Home/SectionThree";
@@ -14,6 +14,12 @@ import SectionSeven from "../Components/Home/SectionSeven";
 import LastSection from "../Components/Home/LastSection";
 
 function Home() {
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
   return (
     <>
       <SectionOne />

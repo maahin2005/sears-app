@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function AccoundMenu() {
   const [isRotated, setIsRotated] = useState(false);
   const menuRef = useRef(null);
+  const handleNavigation = useNavigate("");
 
   const ListArr = [
     { title: "Dashboard" },
@@ -53,7 +55,10 @@ function AccoundMenu() {
         }`}
       >
         <li className="hover:bg-[#e3eefb] p-2">
-          <button className="flex justify-center bg-midNightBlue text-center text-white rounded-3xl hover:bg-midNightBlue">
+          <button
+            onClick={() => handleNavigation("/login")}
+            className="flex justify-center bg-midNightBlue text-center text-white rounded-3xl hover:bg-midNightBlue"
+          >
             Sign-in
           </button>
         </li>
@@ -69,7 +74,10 @@ function AccoundMenu() {
             Earn points,get exclusive coupons & save money with Shop Your Way!
           </p>
           <span>learn more</span>
-          <button className="border-2 border-midNightBlue rounded-3xl font-bold text-midNightBlue">
+          <button
+            onClick={() => handleNavigation("/register")}
+            className="border-2 border-midNightBlue rounded-3xl font-bold text-midNightBlue"
+          >
             Join for Free
           </button>
         </li>
