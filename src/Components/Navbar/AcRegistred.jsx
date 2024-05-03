@@ -1,18 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { LOGOUT_L } from "../../Redux/User/Login/actionTypes";
+import { LOGOUT_R } from "../../Redux/User/Register/actionTypes";
 
-function AccoundMenu() {
+function AcRegistred() {
   const [isRotated, setIsRotated] = useState(false);
   const menuRef = useRef(null);
   const handleNavigation = useNavigate("");
+  const dispatch = useDispatch();
+
+  const { firstName } = useSelector((state) => state.userData);
 
   const ListArr = [
-    { title: "Dashboard" },
-    { title: "Orders" },
-    { title: "Account" },
-    { title: "Order Status" },
-    { title: "Shop Your Way Points" },
+    { title: "Your Dashboard" },
+    { title: "Your Orders" },
+    { title: "Your Account" },
+    { title: "Your Shop Your Way Points" },
   ];
 
   const handleClick = () => {
@@ -23,6 +28,13 @@ function AccoundMenu() {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
       setIsRotated(false);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch({ type: LOGOUT_L });
+    dispatch({ type: LOGOUT_R });
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -37,11 +49,12 @@ function AccoundMenu() {
       <div
         tabIndex={0}
         onClick={handleClick}
-        className="m-1 cursor-pointer flex justify-center items-center gap-2 group"
+        className="m-1 cursor-pointer flex justify-center items-center gap-2 group text-xs font-medium"
       >
         <i className="fa-regular fa-circle-user"></i>{" "}
         <p>
-          Sign-in <br /> Your Points
+          Hi {firstName} <br />
+          Your Account
         </p>
         <i
           className={`fa-solid fa-angle-down transition-transform transform text-sm ${
@@ -55,13 +68,17 @@ function AccoundMenu() {
           isRotated ? "block" : "hidden"
         }`}
       >
-        <li className="hover:bg-[#e3eefb] p-2">
-          <button
-            onClick={() => handleNavigation("/login")}
-            className="flex justify-center bg-midNightBlue text-center text-white rounded-3xl hover:bg-midNightBlue"
-          >
-            Sign-in
-          </button>
+        <li className="block bg-[#6fa9ffca] text-white px-2 py-3 hover:bg-[#6fa9ffb3]">
+          <div className="text-md flex justify-between">
+            <p>Your Points {">"} </p>
+            <p className="text-md font-semibold">
+              $0.00 <br /> in points
+            </p>
+          </div>
+          <p>Start shopping to earn CASHBACK in points on every purchase.</p>
+          <span className="text-midNightBlue underline hover:no-underline font-semibold">
+            Learn More
+          </span>
         </li>
 
         {ListArr.map((el, i) => (
@@ -69,17 +86,12 @@ function AccoundMenu() {
             <a className="hover:bg-[#e3eefb]">{el.title}</a>
           </li>
         ))}
-        <li className="block bg-[#ddd] px-2 py-3 hover:bg-[#e3eefb]">
-          <p>Not a member yet?</p>
-          <p>
-            Earn points,get exclusive coupons & save money with Shop Your Way!
-          </p>
-          <span>learn more</span>
+        <li className="hover:bg-[#e3eefb] p-2">
           <button
-            onClick={() => handleNavigation("/register")}
-            className="border-2 border-midNightBlue rounded-3xl font-bold text-midNightBlue"
+            onClick={handleLogout}
+            className="flex justify-center bg-midNightBlue text-center text-white rounded-3xl hover:bg-midNightBlue"
           >
-            Join for Free
+            Logout
           </button>
         </li>
       </ul>
@@ -87,4 +99,4 @@ function AccoundMenu() {
   );
 }
 
-export default AccoundMenu;
+export default AcRegistred;

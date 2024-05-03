@@ -3,8 +3,13 @@ import ShopbtnMenu from "./ShopbtnMenu";
 import SearchInput from "./SearchInput";
 import AccoundMenu from "./AccoundMenu";
 import { repairsArr, shopMenuArr } from "../helpers/menuArrays";
+import AcRegistred from "./AcRegistred";
+import { useSelector } from "react-redux";
 
 function NavSec() {
+  const login = useSelector((state) => state.login);
+  const auth = useSelector((state) => state.register);
+
   return (
     <nav className="md:flex p-5 bg-midiumBlue text-white justify-center lg:justify-around">
       <div className="flex gap-2 md:gap-6 items-center justify-around w-full">
@@ -21,7 +26,8 @@ function NavSec() {
           <SearchInput />
         </div>
         <a className="lg:inline-block hidden text-sm">My Orders</a>
-        <AccoundMenu />
+        {login.token || auth.auth ? <AcRegistred /> : <AccoundMenu />}
+
         <div className="flex">
           <img
             src="https://www.sears.com/assets/images/icon/cart.svg"
