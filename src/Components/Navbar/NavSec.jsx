@@ -26,7 +26,7 @@ function NavSec() {
           <SearchInput />
         </div>
         <a className="lg:inline-block hidden text-sm">My Orders</a>
-        {login.token || auth.auth ? <AcRegistred /> : <AccoundMenu />}
+        {login.auth || auth.auth ? <AcRegistred /> : <AccoundMenu />}
 
         <div className="flex">
           <img

@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { userRegistration } from "../Redux/User/Register/actions";
 import LoadingIndecator from "../Components/LoadingIndecator";
+import ErrorIndecator from "../Components/ErrorIndecator";
 
 function Register() {
   const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.register);
-  const isLoading = useSelector((state) => state.loading);
+  const { loading, error } = useSelector((state) => state.loading);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -39,7 +40,8 @@ function Register() {
   return (
     <div className="w-screen bg-[#648fa1] py-1">
       <div className="w-11/12 md:w-[70%] xl:w-[40%] h-11/12 m-auto bg-white p-10 grid gap-3">
-        {isLoading ? (
+        {error ? <ErrorIndecator /> : null}
+        {loading ? (
           <LoadingIndecator />
         ) : (
           <>

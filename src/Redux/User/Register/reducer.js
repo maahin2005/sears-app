@@ -1,9 +1,9 @@
 import { LOGOUT_R, REGISTERUSER } from "./actionTypes";
 
-const Local_auth = JSON.parse(localStorage.getItem("auth"));
+const LocalAuth = JSON.parse(localStorage.getItem("auth")) || false;
 
 const initialState = {
-  auth: Local_auth ? true : false,
+  auth: LocalAuth,
 };
 
 export const registerUser = (state = initialState, { type }) => {
@@ -11,7 +11,7 @@ export const registerUser = (state = initialState, { type }) => {
     case REGISTERUSER:
       return { auth: true };
     case LOGOUT_R:
-      return state;
+      return { auth: false };
     default:
       return state;
   }

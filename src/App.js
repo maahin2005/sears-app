@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 
 import PublicRoutes from "./Routing/PublicRoutes";
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const location = useLocation();
@@ -14,6 +15,7 @@ function App() {
         <Navbar />
       )}
       <PublicRoutes />
+      <Footer />
     </div>
   );
 }

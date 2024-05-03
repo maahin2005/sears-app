@@ -1,7 +1,7 @@
 import axios from "axios";
 import { REGISTERUSER } from "./actionTypes";
 import { getUserData } from "../data/actions";
-import { IS_LOADING, NO_LOADING } from "../../Loading/actionTypes";
+import { ERROR, IS_LOADING, NO_LOADING } from "../../Loading/actionTypes";
 
 const API_URL = "https://sears-backend.onrender.com";
 export const userRegistration = (obj) => async (dispatch) => {
@@ -19,5 +19,6 @@ export const userRegistration = (obj) => async (dispatch) => {
     dispatch({ type: NO_LOADING });
   } catch (error) {
     console.log(error);
+    dispatch({ type: ERROR });
   }
 };

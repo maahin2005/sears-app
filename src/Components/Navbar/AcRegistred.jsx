@@ -34,7 +34,7 @@ function AcRegistred() {
     localStorage.clear();
     dispatch({ type: LOGOUT_L });
     dispatch({ type: LOGOUT_R });
-    window.location.reload();
+    // window.location.reload();
   };
 
   useEffect(() => {

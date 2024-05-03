@@ -1,11 +1,10 @@
 import axios from "axios";
 import { LOGIN_SUCCESS } from "./actionTypes";
 import { getUserData } from "../data/actions";
-import { IS_LOADING, NO_LOADING } from "../../Loading/actionTypes";
+import { ERROR, IS_LOADING, NO_LOADING } from "../../Loading/actionTypes";
 
 export const loginUser = (obj) => async (dispatch) => {
   const LOGIN_URL = `https://sears-backend.onrender.com/users/login`;
-
   dispatch({ type: IS_LOADING });
 
   try {
@@ -13,15 +12,17 @@ export const loginUser = (obj) => async (dispatch) => {
 
     const token = resp.data.token;
     const email = resp.data.user.email;
-    console.log("token:", token, "Email: ", email);
     dispatch(getUserData(email));
 
-    dispatch({ type: LOGIN_SUCCESS, payload: token });
     if (token) {
-      localStorage.setItem("token", JSON.stringify(token));
+      dispatch({ type: LOGIN_SUCCESS, payload: token });
+    } else {
+      dispatch({ type: ERROR });
     }
+
     dispatch({ type: NO_LOADING });
   } catch (error) {
-    console.log(error.data);
+    console.log(error.response.data.message);
+    dispatch({ type: ERROR });
   }
 };

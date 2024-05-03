@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate } from "react-router-dom";
 import { loginUser } from "../Redux/User/Login/actions";
 import LoadingIndecator from "../Components/LoadingIndecator";
+import ErrorIndecator from "../Components/ErrorIndecator";
 
 function Login() {
   const [loginData, setLoginData] = useState({
@@ -13,7 +14,7 @@ function Login() {
   const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.login);
-  const isLoading = useSelector((state) => state.loading);
+  const { loading, error } = useSelector((state) => state.loading);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +32,7 @@ function Login() {
     });
   }, []);
 
+  console.log(loading, error);
   if (auth) {
     return <Navigate to="/" />;
   }
@@ -38,7 +40,10 @@ function Login() {
   return (
     <div className="w-screen bg-[#648fa1] py-5">
       <div className="w-11/12 md:w-[60%] lg:w-[40%] h-11/12 m-auto bg-white p-10 grid gap-10">
-        {isLoading ? (
+        {error ? (
+          <ErrorIndecator msg="Error while Login! try again later" />
+        ) : null}
+        {loading ? (
           <LoadingIndecator />
         ) : (
           <>

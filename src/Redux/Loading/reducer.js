@@ -1,11 +1,24 @@
-import { IS_LOADING, NO_LOADING } from "./actionTypes";
+import { ERROR, IS_LOADING, NO_LOADING } from "./actionTypes";
 
-export const loadingReducer = (state = false, { type }) => {
+const initialState = {
+  loading: false,
+  error: false,
+};
+
+export const loadingReducer = (state = initialState, { type }) => {
   switch (type) {
     case IS_LOADING:
-      return true;
+      return { loading: true, error: false };
     case NO_LOADING:
-      return false;
+      return {
+        loading: false,
+        error: false,
+      };
+    case ERROR:
+      return {
+        loading: false,
+        error: true,
+      };
     default:
       return state;
   }

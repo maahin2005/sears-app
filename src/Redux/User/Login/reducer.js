@@ -1,9 +1,9 @@
 import { LOGIN_SUCCESS, LOGOUT_L } from "./actionTypes";
 
-const isTokenPresent = JSON.parse(localStorage.getItem("token")) || null;
+const isTokenPresent = !!localStorage.getItem("token");
 const initialState = {
   token: "",
-  auth: isTokenPresent ? true : false,
+  auth: isTokenPresent,
 };
 
 export const loginReducer = (state = initialState, { type, payload }) => {
@@ -12,7 +12,7 @@ export const loginReducer = (state = initialState, { type, payload }) => {
     case LOGIN_SUCCESS:
       return { token: payload, auth: true };
     case LOGOUT_L:
-      return state;
+      return { token: "", auth: false };
     default:
       return state;
   }
