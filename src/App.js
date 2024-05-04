@@ -15,7 +15,10 @@ function App() {
         <Navbar />
       )}
       <PublicRoutes />
-      <Footer />
+      {location.pathname === "/login" ||
+      location.pathname === "/register" ? null : (
+        <Footer />
+      )}
     </div>
   );
 }

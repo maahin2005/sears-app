@@ -1,23 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getDataFromAPI } from "./../../Redux/Products/actions";
+import { useNavigate } from "react-router-dom";
 
-function ShopbtnMenu({ array, title }) {
+function ShopbtnMenu({ array, title, isTrue = false }) {
   const [isRotated, setIsRotated] = useState(false);
-  // const [isRotatedOne, setIsRotatedOne] = useState(false);
   const menuRef = useRef(null);
+  const dispatch = useDispatch();
+  const handleNavigation = useNavigate();
+
+  const handleMenuClick = (el) => {
+    if (isTrue) {
+      const category = el.toLowerCase();
+      // dispatch(getDataFromAPI(category));
+      handleNavigation(`/products?category=${category}`);
+      setIsRotated(!isRotated);
+    } else {
+      alert("clicked!");
+    }
+  };
 
   const handleClick = () => {
     setIsRotated(!isRotated);
   };
 
-  // const handleClickOne = (e) => {
-  //   e.stopPropagation();
-  //   setIsRotatedOne(!isRotatedOne);
-  // };
-
   const handleClickOutside = (e) => {
     if (menuRef.current && !menuRef.current.contains(e.target)) {
       setIsRotated(false);
-      // setIsRotatedOne(false);
     }
   };
 
@@ -52,36 +61,14 @@ function ShopbtnMenu({ array, title }) {
         }`}
       >
         {array.map((el, i) => (
-          <li key={i} className="hover:bg-[#e3eefb]">
+          <li
+            key={i}
+            className="hover:bg-[#e3eefb]"
+            onClick={() => handleMenuClick(el)}
+          >
             <a className="hover:bg-[#e3eefb] ">{el}</a>
           </li>
         ))}
-        {/* <li onClick={handleClickOne}>
-          <a>
-            <div
-              tabIndex={1}
-              className="m-1 cursor-pointer flex justify-center items-center gap-2"
-            >
-              in{" "}
-              <i
-                className={`fa-solid fa-angle-down transition-transform transform ${
-                  isRotatedOne ? "rotate-180" : ""
-                }`}
-              ></i>
-            </div>
-          </a>
-          <ul
-            tabIndex={1}
-            className={`dropdown-content z-[1] menu p-2 shadow w-52 bg-white text-black cursor-pointer ${
-              isRotatedOne ? "block" : "hidden"
-            }`}
-          >
-            <li>
-              <a>Tools</a>
-            </li>
-         
-          </ul>
-        </li> */}
       </ul>
     </div>
   );

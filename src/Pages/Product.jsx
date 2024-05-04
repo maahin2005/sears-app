@@ -1,0 +1,133 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import LoadingIndecator from "../Components/LoadingIndecator";
+
+function Product() {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleNavigatation = useNavigate("");
+  const { id } = useParams();
+  const [data, setData] = useState(null);
+  const API_URL = `https://sears-backend.onrender.com/products/${id}`;
+
+  const singleData = async () => {
+    setIsLoading(true);
+    try {
+      const resp = await axios.get(API_URL);
+
+      setData(resp.data.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAddToCart = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        handleNavigatation("/login");
+        return;
+      }
+
+      const response = await fetch(
+        `https://sears-backend.onrender.com/cart/add/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId: id }),
+        }
+      );
+
+      if (response.ok) {
+        alert("Product added successfully");
+        // You can update the cart state here
+      } else {
+        alert("Failed to add product to cart");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (data) {
+      setIsLoading(false);
+    }
+    singleData();
+  }, [id]);
+
+  return (
+    <div>
+      {isLoading ? (
+        <LoadingIndecator />
+      ) : (
+        <div className="block lg:flex flex-wrap justify-evenly p-5">
+          {data && data.images && (
+            <img
+              className="w-1/2 m-auto lg:w-[30%]"
+              alt={data?.title}
+              src={data?.images[0]}
+            />
+          )}
+
+          <div className="mt-20 text-black grid gap-5 w-11/12 m-auto lg:w-1/3">
+            <p className="text-3xl ">{data?.title}</p>
+            <p>
+              Sold by <span className="font-bold">Sears</span>
+            </p>
+            <div className="flex items-center gap-2 bg-blue-100 p-2">
+              <img
+                src="https://www.sears.com/content/configs/citi/images/sears/SYW-Mastercard-2024.webp"
+                alt=""
+                className="w-[80px] h-[60px]"
+              />
+              <p className="font-semibold">
+                Apply for the Shop Your Way Mastercard®** Today! Get up to $225*
+                in statement credits with eligible purchases. Apply in Checkout
+              </p>
+            </div>
+            <hr />
+            <p className="font-bold text-2xl">See Price in Cart</p>
+            <p className="text-red-600 text-3xl font-semibold">
+              ${data?.price}
+            </p>
+            <hr />
+            <p className="text-2xl">{data?.description}</p>
+            <p>or 4 payments on orders over $2 with</p>
+            <hr />
+            <p>Get CASHBACK in points </p>
+            <hr />
+            <p className="text-sm">
+              As low as $100.85/week with Katapult lease to own
+            </p>
+            <p className="text-sm">
+              Minimum order total of $199 required. Katapult is not available in
+              GU, MN, PR, NJ, VI, WI, WY{" "}
+            </p>
+            <hr />
+            <p>
+              Using{" "}
+              <span className="text-blue-500 hover:underline">
+                New York, NY 10101{" "}
+              </span>{" "}
+              for pricing and availability
+            </p>
+            <hr />
+            <button
+              onClick={handleAddToCart}
+              className="hover:bg-black btn text-white font-semibold text-lg transition-all bg-blue-600 border-0"
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Product;

@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { userRegistration } from "../Redux/User/Register/actions";
 import LoadingIndecator from "../Components/LoadingIndecator";
 import ErrorIndecator from "../Components/ErrorIndecator";
+import { loginUser } from "../Redux/User/Login/actions";
 
 function Register() {
   const handleNavigation = useNavigate("");
@@ -24,6 +25,9 @@ function Register() {
     console.log(formData);
     console.log("auth: ", auth);
     dispatch(userRegistration(formData));
+    const { email, password } = formData;
+    const obj = { email, password };
+    dispatch(loginUser(obj));
   };
 
   useEffect(() => {
