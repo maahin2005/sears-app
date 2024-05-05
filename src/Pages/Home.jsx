@@ -27,6 +27,7 @@ function Home() {
         array={circleCardArr}
         title="SHOP BY CATEGORY"
         cols={8}
+        isTrue={true}
       />
       <SectionThree />
       <SectionFour />
@@ -34,11 +35,17 @@ function Home() {
         array={circleCardArr2}
         title="SHOP MORE CATEGORIES"
         cols={7}
+        isTrue={true}
       />
       <SectionFive />
       <CommonCardSection array={arr1} title="OUR APPLIANCE PROMISE" cols={5} />
       <SectionSix />
-      <CommonCardSection array={arr2} title="SHOP OUR TOP BRANDS" cols={6} />
+      <CommonCardSection
+        array={arr2}
+        title="SHOP OUR TOP BRANDS"
+        cols={6}
+        isTrue={true}
+      />
       <div className="my-5 py-10 border-b-2 border-gray-400 w-11/12 m-auto">
         <SectionSeven />
       </div>

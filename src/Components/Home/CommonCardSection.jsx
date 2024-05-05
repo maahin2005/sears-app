@@ -1,8 +1,20 @@
-function CommonCardSection({ array, title, cols }) {
-  const CircleCard = ({ img, title }) => {
+import { useNavigate } from "react-router-dom";
+
+function CommonCardSection({ array, title, cols, isTrue = false }) {
+  const handleNavigation = useNavigate(" ");
+
+  const CircleCard = ({ img, title, link }) => {
+    const handleOnClickNavigation = () => {
+      if (isTrue) {
+        handleNavigation(`products?category=${link}`);
+      } else {
+        handleNavigation("/");
+      }
+    };
+
     return (
       <>
-        <div>
+        <div onClick={handleOnClickNavigation}>
           <div className="md:h-52 h-max">
             <img src={img} alt={title} />
           </div>

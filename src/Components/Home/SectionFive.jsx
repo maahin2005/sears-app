@@ -1,10 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function SectionFive() {
+  const handleNavigation = useNavigate(" ");
   return (
     <section className="text-center">
       <p className="text-6xl">SAVE ON POPULAR CATEGORIES</p>
-      <div className="block sm:flex justify-center w-11/12 m-auto p-5 mt-8">
+      <div
+        className="block sm:flex justify-center w-11/12 m-auto p-5 mt-8 cursor-pointer"
+        onClick={() =>
+          handleNavigation("/products?category=Home%20%26%20Garden")
+        }
+      >
         <div className="grid justify-center gap-2 sm:w-1/2 p-2">
           <img
             className="w-11/12"
@@ -30,7 +37,14 @@ function SectionFive() {
           />
         </div>
       </div>
-      <a className="text-blue-500">see details</a>
+      <p
+        className="text-blue-500 cursor-pointer hover:underline"
+        onClick={() =>
+          handleNavigation("/products?category=Home%20%26%20Garden")
+        }
+      >
+        see details
+      </p>
     </section>
   );
 }

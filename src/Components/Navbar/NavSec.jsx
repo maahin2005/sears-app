@@ -26,6 +26,9 @@ function NavSec() {
           <img
             src="https://www.sears.com/assets/images/logos/sears_logo.svg"
             alt="Logo-Sears"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
           />
         </div>
         <ShopbtnMenu array={shopMenuArr} title="Shop" isTrue={true} />
@@ -37,7 +40,10 @@ function NavSec() {
         <a className="lg:inline-block hidden text-sm">My Orders</a>
         {login.auth || auth.auth ? <AcRegistred /> : <AccoundMenu />}
 
-        <div className="flex">
+        <div
+          className="flex cursor-pointer"
+          onClick={() => handleNavigation("/cart")}
+        >
           <img
             src="https://www.sears.com/assets/images/icon/cart.svg"
             alt="cart"

@@ -31,21 +31,23 @@ function Products() {
     );
   };
 
-  const ProductCard = ({ price, title, img, desc }) => {
+  const ProductCard = ({ price, title, img, desc, link }) => {
     return (
-      <div className="grid gap-5 my-5 text-black p-3 border hover:border-blue-500 cursor-pointer">
-        <div>
-          <img src={img} alt={title} className="h-4/5" />
+      <Link to={`/products/${link}`}>
+        <div className="h-[700px] grid gap-5 my-5 text-black p-3 border hover:border-blue-500 cursor-pointer">
+          <div>
+            <img src={img} alt={title} className="w-[400px] h-[400px]" />
+          </div>
+          <div className="self-end grid gap-3">
+            <p className="text-2xl font-semibold text-red-600">${price}</p>
+            <p className="text-gray-700 font-semibold">
+              {Math.floor(Math.random() * 100)}% In Savings
+            </p>
+            <p className="tracking-wide text-lg">{title}</p>
+            <p className="text-sm line-clamp-2">{desc}</p>
+          </div>
         </div>
-        <div className="self-end grid gap-3">
-          <p className="text-2xl font-semibold text-red-600">${price}</p>
-          <p className="text-gray-700 font-semibold">
-            {Math.floor(Math.random() * 100)}% In Savings
-          </p>
-          <p className="tracking-wide text-lg">{title}</p>
-          <p className="text-sm line-clamp-2">{desc}</p>
-        </div>
-      </div>
+      </Link>
     );
   };
 
@@ -65,8 +67,14 @@ function Products() {
 
   useEffect(() => {
     dispatch(getDataFromAPI(category));
-    console.log(priceFilteration());
   }, [category]);
+
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
 
   return (
     <div className="p-5">
@@ -75,8 +83,8 @@ function Products() {
       ) : (
         <div>
           <p className="my-5 text-black text-lg font-semibold">
-            Shop French Door{" "}
-            {data ? data[0].tags[Math.floor(Math.random() * 2)] : null}
+            Shop French{" "}
+            {data ? data[0]?.tags[Math.floor(Math.random() * 2)] : null}
           </p>
           <div className="flex flex-wrap justify-center gap-5">
             {first5Products?.map((el) => (
@@ -103,7 +111,7 @@ function Products() {
               <option value={"high"}>High to Low</option>
             </select>
           </div>
-          <div className="grid grid-cols-4 w-11/12 m-auto p-2 gap-2">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 w-11/12 m-auto p-2 gap-2">
             {priceFilteration()?.map((el) => (
               <ProductCard
                 key={el._id}
@@ -111,6 +119,7 @@ function Products() {
                 title={el.title}
                 img={el.images[0]}
                 desc={el.description}
+                link={el._id}
               />
             ))}
           </div>

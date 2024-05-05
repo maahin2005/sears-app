@@ -1,23 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { getDataFromAPI } from "./../../Redux/Products/actions";
 import { useNavigate } from "react-router-dom";
 
 function ShopbtnMenu({ array, title, isTrue = false }) {
   const [isRotated, setIsRotated] = useState(false);
   const menuRef = useRef(null);
-  const dispatch = useDispatch();
   const handleNavigation = useNavigate();
 
   const handleMenuClick = (el) => {
     if (isTrue) {
-      const category = el.toLowerCase();
-      // dispatch(getDataFromAPI(category));
-      handleNavigation(`/products?category=${category}`);
-      setIsRotated(!isRotated);
+      const category = el;
+
+      handleNavigation(
+        `/products?category=${category.replace(" & ", "%20%26%20")}`
+      );
     } else {
-      alert("clicked!");
+      handleNavigation(`/repair?product=${el}`);
     }
+    setIsRotated(!isRotated);
   };
 
   const handleClick = () => {
@@ -56,7 +55,7 @@ function ShopbtnMenu({ array, title, isTrue = false }) {
       </div>
       <ul
         tabIndex={0}
-        className={`h-96 overflow-scroll dropdown-content z-[1] menu p-2 shadow w-60 mt-5 bg-white text-black cursor-pointer ${
+        className={`h-96 overflow-auto dropdown-content z-[1] menu p-2 shadow w-60 mt-5 bg-white text-black cursor-pointer ${
           isRotated ? "block" : "hidden"
         }`}
       >

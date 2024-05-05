@@ -6,6 +6,7 @@ import LoadingIndecator from "../Components/LoadingIndecator";
 function Product() {
   const [isLoading, setIsLoading] = useState(false);
   const handleNavigatation = useNavigate("");
+  const [showAlert, setShowAlert] = useState(false);
   const { id } = useParams();
   const [data, setData] = useState(null);
   const API_URL = `https://sears-backend.onrender.com/products/${id}`;
@@ -24,30 +25,28 @@ function Product() {
 
   const handleAddToCart = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = JSON.parse(localStorage.getItem("token"));
+      console.log(token);
       if (!token) {
         handleNavigatation("/login");
         return;
       }
 
-      const response = await fetch(
+      const response = await axios.post(
         `https://sears-backend.onrender.com/cart/add/${id}`,
+        {},
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ productId: id }),
         }
       );
 
-      if (response.ok) {
-        alert("Product added successfully");
-        // You can update the cart state here
-      } else {
-        alert("Failed to add product to cart");
-      }
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -60,12 +59,40 @@ function Product() {
     singleData();
   }, [id]);
 
+  useEffect(() => {
+    window.scroll({
+      top: 0,
+      behavior: "instant",
+    });
+  }, []);
+
   return (
     <div>
       {isLoading ? (
         <LoadingIndecator />
       ) : (
         <div className="block lg:flex flex-wrap justify-evenly p-5">
+          {showAlert && (
+            <div
+              className={`alert w-1/2 m-auto alert-success fixed top-20 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white px-4 py-3 rounded shadow-lg z-50 transition duration-500`}
+              role="alert"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="stroke-current shrink-0 h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>Product Added to cart Successfully</span>
+            </div>
+          )}
           {data && data.images && (
             <img
               className="w-1/2 m-auto lg:w-[30%]"

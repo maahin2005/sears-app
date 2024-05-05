@@ -5,6 +5,9 @@ import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Products from "../Pages/Products";
 import Product from "../Pages/Product";
+import Cart from "../Pages/Cart";
+import PrivateRoutes from "./PrivateRoutes";
+import Repair from "../Pages/Repair";
 
 function PublicRoutes() {
   return (
@@ -14,6 +17,15 @@ function PublicRoutes() {
       <Route path="/register" element={<Register />} />
       <Route path="/products" element={<Products />} />
       <Route path="/products/:id" element={<Product />} />
+      <Route path="/repair" element={<Repair />} />
+      <Route
+        path="/cart"
+        element={
+          <PrivateRoutes>
+            <Cart />
+          </PrivateRoutes>
+        }
+      />
     </Routes>
   );
 }
