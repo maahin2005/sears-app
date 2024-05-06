@@ -2,7 +2,7 @@ import React from "react";
 
 function FooterTwo() {
   return (
-    <div className="p-20 bg-[#dbdde0]">
+    <div className="p-20 bg-[#dbdde0] text-black">
       <div className=" flex-wrap flex justify-around text-black pb-5 border-b-2 border-zinc-400">
         <div className="flex gap-2">
           <img
@@ -18,7 +18,7 @@ function FooterTwo() {
         <p>Manage Your Account</p>
         <p>Pay Your Bill</p>
       </div>
-      <div className="w-3/4 p-5 text-center m-auto text-sm">
+      <div className="11/12 md:w-3/4 p-2 md:p-5 text-center m-auto text-sm">
         <div className="flex flex-wrap justify-around">
           <p>Price Match Policy</p>
           <p> Accessibility </p>
