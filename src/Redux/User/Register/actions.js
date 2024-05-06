@@ -14,6 +14,7 @@ export const userRegistration = (obj) => async (dispatch) => {
 
     dispatch({ type: REGISTERUSER });
     localStorage.setItem("auth", JSON.stringify(true));
+    localStorage.setItem("email", JSON.stringify(email));
 
     dispatch(getUserData(email));
     dispatch({ type: NO_LOADING });

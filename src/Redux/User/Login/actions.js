@@ -12,8 +12,10 @@ export const loginUser = (obj) => async (dispatch) => {
 
     const token = resp.data.token;
     const email = resp.data.user.email;
+
     dispatch(getUserData(email));
     localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("email", JSON.stringify(email));
 
     if (token) {
       dispatch({ type: LOGIN_SUCCESS, payload: token });

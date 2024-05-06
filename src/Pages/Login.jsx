@@ -32,7 +32,6 @@ function Login() {
     });
   }, []);
 
-  console.log(loading, error);
   if (auth) {
     return <Navigate to="/" />;
   }

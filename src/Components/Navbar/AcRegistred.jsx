@@ -8,7 +8,6 @@ import { LOGOUT_R } from "../../Redux/User/Register/actionTypes";
 function AcRegistred() {
   const [isRotated, setIsRotated] = useState(false);
   const menuRef = useRef(null);
-  const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
 
   const { firstName } = useSelector((state) => state.userData);

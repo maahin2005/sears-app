@@ -67,7 +67,12 @@ export default function SectionOne() {
         </div>
       </Slider>
       <p className="mt-10">
-        <a className="text-blue-600">see details</a>
+        <p
+          className="text-blue-600 cursor-pointer hover:underline"
+          onClick={() => handleNavigation("/products?category=appliances")}
+        >
+          see details
+        </p>
       </p>
     </section>
   );

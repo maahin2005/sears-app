@@ -1,40 +1,19 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import LoadingIndecator from "../Components/LoadingIndecator";
 import SingleCart from "../Components/SingleCart";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartItems } from "../Redux/Cart/actions";
 
 function Cart() {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [total, setTotal] = useState(0);
   const handleNavigation = useNavigate("");
-
-  const getCartItems = async () => {
-    const API_URL = "https://sears-backend.onrender.com/cart";
-
-    try {
-      const token = JSON.parse(localStorage.getItem("token"));
-      if (!token) {
-        console.error("Token not found");
-        return;
-      }
-
-      const response = await axios.get(API_URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData(response.data.items);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.loading);
+  const data = useSelector((state) => state.cartData);
 
   useEffect(() => {
-    getCartItems();
+    dispatch(getCartItems);
   }, []);
 
   return (
@@ -43,7 +22,7 @@ function Cart() {
         <div className="bg-[#f8f8f8] p-10">
           <p className="font-bold">Your Cart</p>
         </div>
-        {isLoading ? (
+        {loading ? (
           <LoadingIndecator />
         ) : (
           <div>
@@ -63,10 +42,12 @@ function Cart() {
               </a>
               <div className="modal" role="dialog" id="my_modal_8">
                 <div className="modal-box">
-                  <h3 className="font-bold text-lg">Hello!</h3>
-                  <p className="py-4">Estimated total: ${total}</p>
+                  <h3 className="font-bold text-lg">
+                    Process ahead to checkout
+                  </h3>
+                  <p className="py-4">Estimated total: ${total.toFixed(2)}</p>
                   <div className="modal-action">
-                    <a href="#" className="btn">
+                    <a href="/" className="btn">
                       cancel
                     </a>
                     <button>Proceed</button>
@@ -75,13 +56,19 @@ function Cart() {
               </div>
             </div>
             <div>
-              {data?.map((el) => (
-                <SingleCart
-                  key={el._id}
-                  productId={el.productId}
-                  setTotal={setTotal}
-                />
-              ))}
+              {data?.length ? (
+                data?.map((el) => (
+                  <SingleCart
+                    key={el._id}
+                    productId={el.productId}
+                    setTotal={setTotal}
+                  />
+                ))
+              ) : (
+                <p className="text-center justify-center text-4xl text-black font-semibold h-[30vh] flex items-center">
+                  Items Not Added to Cart yet
+                </p>
+              )}
             </div>
           </div>
         )}

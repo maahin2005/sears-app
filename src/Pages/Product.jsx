@@ -5,6 +5,7 @@ import LoadingIndecator from "../Components/LoadingIndecator";
 
 function Product() {
   const [isLoading, setIsLoading] = useState(false);
+  const [btnState, setBtnState] = useState(false);
   const handleNavigatation = useNavigate("");
   const [showAlert, setShowAlert] = useState(false);
   const { id } = useParams();
@@ -24,15 +25,16 @@ function Product() {
   };
 
   const handleAddToCart = async () => {
+    setBtnState(true);
     try {
       const token = JSON.parse(localStorage.getItem("token"));
-      console.log(token);
+
       if (!token) {
         handleNavigatation("/login");
         return;
       }
 
-      const response = await axios.post(
+      await axios.post(
         `https://sears-backend.onrender.com/cart/add/${id}`,
         {},
         {
@@ -44,9 +46,11 @@ function Product() {
       );
 
       setShowAlert(true);
+      setBtnState(false);
       setTimeout(() => {
         setShowAlert(false);
-      }, 3000);
+        handleNavigatation("/cart");
+      }, 1200);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -144,12 +148,16 @@ function Product() {
               for pricing and availability
             </p>
             <hr />
-            <button
-              onClick={handleAddToCart}
-              className="hover:bg-black btn text-white font-semibold text-lg transition-all bg-blue-600 border-0"
-            >
-              Add To Cart
-            </button>
+            {btnState ? (
+              <LoadingIndecator />
+            ) : (
+              <button
+                onClick={handleAddToCart}
+                className="hover:bg-black btn text-white font-semibold text-lg transition-all bg-blue-600 border-0"
+              >
+                Add To Cart
+              </button>
+            )}
           </div>
         </div>
       )}
