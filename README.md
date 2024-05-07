@@ -19,8 +19,6 @@
   - Browse, search, and view product details.
 ####  Shopping Cart:
   - Add and remove products from the cart.
-#### Order Management:
-  - Place orders and view order history.
 #### Search Functionality:
   - Search for products by name or category.
 #### Responsive Design:
