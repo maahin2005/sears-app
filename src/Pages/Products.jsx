@@ -77,7 +77,17 @@ function Products() {
   }, []);
 
   return (
-    <div className="p-5">
+    <div className="p-5 text-black">
+      <div className="breadcrumbs text-lg text-blue-700">
+        <ul>
+          <li>
+            <a href="/" className="underline hover:underline-offset-0">
+              Home
+            </a>
+          </li>
+          <li>{category}</li>
+        </ul>
+      </div>
       {loading ? (
         <LoadingIndecator />
       ) : (

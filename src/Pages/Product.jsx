@@ -72,6 +72,27 @@ function Product() {
 
   return (
     <div>
+      <div className="breadcrumbs text-lg text-blue-700 p-10">
+        <ul>
+          <li>
+            <a href="/" className="underline hover:underline-offset-0">
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href={`/products?category=${data?.category.replace(
+                " & ",
+                "%20%26%20"
+              )}`}
+              className="underline hover:underline-offset-0"
+            >
+              {data?.category}
+            </a>
+          </li>
+          <li>{data?.title}</li>
+        </ul>
+      </div>
       {isLoading ? (
         <LoadingIndecator />
       ) : (
@@ -106,6 +127,7 @@ function Product() {
           )}
 
           <div className="mt-20 text-black grid gap-5 w-11/12 m-auto lg:w-1/3">
+            <p>{data?.category}</p>
             <p className="text-3xl ">{data?.title}</p>
             <p>
               Sold by <span className="font-bold">Sears</span>
