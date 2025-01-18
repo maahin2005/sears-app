@@ -8,10 +8,13 @@ import axios from "axios";
 
 function Cart() {
   const [showAlert, setShowAlert] = useState(false);
+  const { firstName } = useSelector((state) => state.userData);
+
   const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.loading);
   const data = useSelector((state) => state.cartData);
+  const total = useSelector((state) => state.cartTotalData);
 
   const makeOrder = async () => {
     const token = JSON.parse(localStorage.getItem("token"));
@@ -98,18 +101,96 @@ function Cart() {
               ) : null}
 
               <div className="modal" role="dialog" id="my_modal_8">
-                <div className="modal-box">
-                  <h3 className="font-bold text-lg">
-                    Process ahead to checkout
-                  </h3>
-                  <p className="py-4">Estimated total: ${data?.total}</p>
-                  <div className="modal-action">
-                    <a href="/" className="btn">
-                      cancel
-                    </a>
-                    <a href="#" className="btn" onClick={makeOrder}>
-                      Order
-                    </a>
+                <div className="h-[900px] rounded-lg shadow-lg w-[700px] grid modal-box bg-white">
+                  <div className="p-1 mx-auto">
+                    {/* Heading */}
+                    <h3 className="font-bold text-2xl text-gray-800 mb-3 text-center">
+                      Proceed to Checkout
+                    </h3>
+
+                    {/* Thank You Message */}
+                    <p className="text-gray-600 text-lg mb-2 text-center">
+                      Thank you dear{" "}
+                      <span className="text-black font-bold">{firstName}</span>{" "}
+                      for shopping with us! We hope you love your purchase.
+                    </p>
+
+                    {/* Order Summary */}
+                    <p className="text-gray-600 text-lg">
+                      You have added a total of{" "}
+                      <span className="font-medium">{data?.length || 0}</span>{" "}
+                      products to your cart.
+                    </p>
+                    <p className="py-2 text-lg text-gray-700">
+                      Your Estimated Total:{" "}
+                      <span className="font-semibold text-green-600">
+                        ${total}
+                      </span>
+                    </p>
+
+                    {/* Payment Options */}
+                    <div className="">
+                      <h4 className="font-semibold text-lg text-gray-800 mb-2">
+                        Payment Method:
+                      </h4>
+                      <label className="inline-flex items-center text-gray-700 mb-2">
+                        <input
+                          type="radio"
+                          name="payment"
+                          value="COD"
+                          className="form-radio text-blue-600"
+                          defaultChecked
+                        />
+                        <span className="ml-2">Cash on Delivery (COD)</span>
+                      </label>
+                      <p className="text-sm text-gray-500 italic">
+                        * For customer trust, we offer a Cash on Delivery (COD)
+                        process for payments. We hope you will like it!.
+                      </p>
+                      <p className="text-sm text-gray-500 italic">
+                        * Online payment is currently unavailable to ensure a
+                        secure and reliable shopping experience through COD.
+                      </p>
+                      <p className="text-sm text-gray-500 italic">
+                        * Your trust is our priority; hence, we provide a COD
+                        option to ensure a hassle-free and trustworthy
+                        transaction.
+                      </p>
+                    </div>
+
+                    {/* Terms and Conditions */}
+                    <div className="mt-3">
+                      <h4 className="font-semibold text-lg text-gray-800 mb-2">
+                        Terms and Conditions:
+                      </h4>
+                      <ul className="text-sm text-gray-600 list-disc list-inside">
+                        <li>All orders are subject to availability.</li>
+                        <li>
+                          Returns are accepted within 7 days of delivery, terms
+                          apply.
+                        </li>
+                        <li>
+                          Cash on Delivery is available for orders under $500.
+                        </li>
+                        <li>Ensure to verify your items upon delivery.</li>
+                      </ul>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="border-t mt-3 pt-3 flex justify-end space-x-4">
+                      <a
+                        href="/"
+                        className="btn bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition"
+                      >
+                        Cancel
+                      </a>
+                      <button
+                        className="btn bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                        onClick={makeOrder}
+                      >
+                        Place Order
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

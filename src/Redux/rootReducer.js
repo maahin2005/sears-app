@@ -5,6 +5,7 @@ import { dataReducer } from "./User/data/reducer";
 import { loadingReducer } from "./Loading/reducer";
 import { productReducer } from "./Products/reducer";
 import { cartReducer } from "./Cart/reducer";
+import { cartTotalReducer } from "./CartTotal/reducer";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
@@ -13,4 +14,5 @@ export const rootReducer = combineReducers({
   loading: loadingReducer,
   products: productReducer,
   cartData: cartReducer,
+  cartTotalData: cartTotalReducer,
 });
