@@ -7,6 +7,7 @@ import ErrorIndecator from "../Components/ErrorIndecator";
 import { loginUser } from "../Redux/User/Login/actions";
 
 function Register() {
+  const [showPassword, setShowPassword] = useState(false);
   const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.register);
@@ -22,8 +23,6 @@ function Register() {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    console.log(formData);
-    console.log("auth: ", auth);
     dispatch(userRegistration(formData));
     const { email, password } = formData;
     const obj = { email, password };
@@ -114,7 +113,7 @@ function Register() {
 
                   <p className="text-sm">Password*</p>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className="py-1 border-2 outline-cyan-400 bg-white text-black"
                     onChange={(e) =>
                       setFormData((prevData) => ({
@@ -125,7 +124,11 @@ function Register() {
                     required
                   />
                   <label className="flex items-center mt-1 gap-2 cursor-pointer">
-                    <input type="checkbox" className="bg-white" />
+                    <input
+                      type="checkbox"
+                      className=""
+                      onChange={() => setShowPassword(!showPassword)}
+                    />
                     <span className="text-xs text-[#6c757d]">
                       Show Password
                     </span>

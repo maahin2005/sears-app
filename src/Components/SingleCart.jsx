@@ -4,7 +4,7 @@ import LoadingIndecator from "./LoadingIndecator";
 import { getCartItems } from "../Redux/Cart/actions";
 import { useDispatch } from "react-redux";
 
-const SingleCart = ({ productId, setTotal }) => {
+const SingleCart = ({ productId }) => {
   const [productData, setProductData] = useState({});
 
   const [isLoading, setIsLoading] = useState(true);
@@ -62,7 +62,6 @@ const SingleCart = ({ productId, setTotal }) => {
       const response = await axios.get(API_URL);
 
       setProductData(response.data.data);
-      setTotal((prev) => prev + response.data.data.price);
       setIsLoading(false);
     } catch (error) {
       console.log(error);

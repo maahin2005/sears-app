@@ -7,7 +7,6 @@ import { getCartItems } from "../Redux/Cart/actions";
 import axios from "axios";
 
 function Cart() {
-  const [total, setTotal] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
   const handleNavigation = useNavigate("");
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function Cart() {
     try {
       await Promise.all(
         data.map(async (el) => {
-          console.log("el : ", el, el._id);
           await axios.delete(
             `https://sears-backend.onrender.com/cart/remove/${el.productId}`,
             {
@@ -104,7 +102,7 @@ function Cart() {
                   <h3 className="font-bold text-lg">
                     Process ahead to checkout
                   </h3>
-                  <p className="py-4">Estimated total: ${total.toFixed(2)}</p>
+                  <p className="py-4">Estimated total: ${data?.total}</p>
                   <div className="modal-action">
                     <a href="/" className="btn">
                       cancel
@@ -119,11 +117,7 @@ function Cart() {
             <div>
               {data?.length ? (
                 data?.map((el) => (
-                  <SingleCart
-                    key={el._id}
-                    productId={el.productId}
-                    setTotal={setTotal}
-                  />
+                  <SingleCart key={el._id} productId={el.productId} />
                 ))
               ) : (
                 <p className="text-center justify-center text-4xl text-black font-semibold h-[30vh] flex items-center">
